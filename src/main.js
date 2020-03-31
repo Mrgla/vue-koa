@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-import { Icon, Button, Col, Row, Search, Swipe, SwipeItem, Lazyload ,Toast } from "vant";
+import { Icon, Button, Col, Row, Search, Swipe, SwipeItem, Lazyload, Toast, List, Field, NavBar } from "vant";
 Vue.use(Icon)
 Vue.use(Button)
 Vue.use(Col)
@@ -14,6 +14,9 @@ Vue.use(Swipe)
 Vue.use(SwipeItem)
 Vue.use(Lazyload)
 Vue.use(Toast)
+Vue.use(List)
+Vue.use(Field)
+Vue.use(NavBar)
 
 Vue.config.productionTip = false
 

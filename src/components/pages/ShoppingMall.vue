@@ -32,23 +32,72 @@
     <div class="ad-banner">
       <img v-lazy="adBanner.PICTURE_ADDRESS" width="100%" />
     </div>
+
+    <div class="recommend-area">
+      <div class="recommend-title">商品推荐</div>
+      <div class="recommend-body">
+        <swiper :options="swiperOption">
+          <swiper-slide v-for=" (item ,index) in recommendGoods" :key="index">
+            <div class="recommend-item">
+              <img :src="item.image" width="80%" />
+              <div>{{item.goodsName}}</div>
+              <div>￥{{item.price | moneyFilter}} (￥{{item.mallPrice}})</div>
+            </div>
+          </swiper-slide>
+        </swiper>
+      </div>
+    </div>
+
+    <div>
+      <floorComponent :floorData="floor1" :floorTitle="floorName.floor1"></floorComponent>
+      <floorComponent :floorData="floor2" :floorTitle="floorName.floor2"></floorComponent>
+      <floorComponent :floorData="floor3" :floorTitle="floorName.floor3"></floorComponent>
+    </div>
+
+    <div>
+      <van-list>
+        <van-row gutter="20">
+          <van-col span="12" v-for="(item,index) in hotGoods" :key="index">
+            <goodsInfo :goodsImage="item.image" :goodsName="item.name" :goodsPrice="item.price"></goodsInfo>
+          </van-col>
+        </van-row>
+      </van-list>
+    </div>
   </div>
 </template>
 
 <script>
+import "swiper/dist/css/swiper.css";
+import { swiper, swiperSlide } from "vue-awesome-swiper";
+import floorComponent from "../component/floorComponent";
+import goodsInfo from "../component/goodsInfoComponent";
+
+import { toMoney } from "@/filter/index";
 import { getIndex } from "@/api/index";
 export default {
   name: "ShoppingMall",
+  components: {
+    swiper,
+    swiperSlide,
+    floorComponent,
+    goodsInfo,
+  },
   data() {
     return {
       msg: "hello world",
       searchWord: "",
-      bannerPicArray: [
-        "https://img.yzcdn.cn/vant/apple-1.jpg",
-        "https://img.yzcdn.cn/vant/apple-2.jpg"
-      ],
+      bannerPicArray: [],
       category: "",
-      adBanner: ""
+      adBanner: "",
+      recommendGoods: "",
+      floorName: "",
+      floor1: [],
+      floor2: [],
+      floor3: [],
+      swiperOption: {
+        slidesPerView: 3
+      },
+      hotGoods: []
     };
   },
   created() {
@@ -56,14 +105,25 @@ export default {
     let _this = this;
     getIndex()
       .then(res => {
-        console.log(res);
+        // console.log(res);
         _this.category = res.data.category;
         _this.adBanner = res.data.advertesPicture;
         _this.bannerPicArray = res.data.slides;
+        _this.recommendGoods = res.data.recommend;
+        _this.floor1 = res.data.floor1; //楼层1数据
+        _this.floor2 = res.data.floor2; //楼层1数据
+        _this.floor3 = res.data.floor3; //楼层1数据
+        _this.floorName = res.data.floorName; //楼层1数据
+        _this.hotGoods = res.data.hotGoods;
       })
       .catch(err => {
         _this.$toast("网络错误");
       });
+  },
+  filters: {
+    moneyFilter(money) {
+      return toMoney(money);
+    }
   }
 };
 </script>
@@ -113,5 +173,73 @@ export default {
   padding: 0.3rem;
   font-size: 12px;
   text-align: center;
+}
+
+.recommend-area {
+  background-color: #fff;
+  margin-top: 0.3rem;
+}
+.recommend-title {
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  padding: 0.2rem 0.6rem;
+  color: #e5017d;
+}
+
+.recommend-body {
+  border-bottom: 1px solid #eee;
+}
+
+.recommend-item {
+  width: 99%;
+  border-right: 1px solid #eee;
+  font-size: 12px;
+  text-align: center;
+}
+
+.floor_name {
+  text-align: center;
+  background: pink;
+}
+
+.floor-anomaly {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+}
+.floor-anomaly div {
+  width: 10rem;
+
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+.floor-one {
+  border-right: 1px solid #ddd;
+}
+.floor-two {
+  border-bottom: 1px solid #ddd;
+}
+.floor-rule {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: #fff;
+}
+.floor-rule div {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 10rem;
+  border-bottom: 1px solid #ddd;
+}
+.floor-rule div:nth-child(odd) {
+  border-right: 1px solid #ddd;
+}
+
+.hot-area {
+  text-align: center;
+  font-size: 14px;
+  height: 1.8rem;
+  line-height: 1.8rem;
 }
 </style>

@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { Toast } from "vant";
+
 
 let baseURL = process.env.NODE_ENV == 'development' ? '/api' : ''
 
@@ -17,11 +19,11 @@ export function ajax(url, data = {}, type = 'get') {
                 resolve(res.data)
             } else {
                 reject(res)
-                // _this.$toast('网络错误~');`
+                Toast('网络错误~');
             }
         }).catch(err => {
             reject(err)
-            // _this.$toast('网络错误~');
+            Toast('网络错误~');
         })
     })
 
