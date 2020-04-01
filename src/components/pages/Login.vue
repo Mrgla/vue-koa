@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar title="用户注册" left-text left-arrow @click-left="goBack" />
+    <van-nav-bar title="登录" left-text left-arrow @click-left="goBack" />
 
     <div class="register-panel">
       <van-field
@@ -22,17 +22,19 @@
         :error-message="paswordMsg"
       />
       <div class="register-button">
-        <van-button type="primary" :loading="openLoading" size="large" @click="submit">马上注册</van-button>
+        <van-button type="primary" :loading="openLoading" size="large" @click="submit">登录</van-button>
       </div>
       <div class="register-button">
-        <van-button type="default" plain size="large" @click="goLogin()">去登录</van-button>
+        <router-link to="/register">
+          <van-button type="default" plain size="large">去注册</van-button>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { UserRegister } from "@/api/index";
+import { UserLogin } from "@/api/index";
 export default {
   data() {
     return {
@@ -47,29 +49,23 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
-    goLogin(){
-      this.$router.push({
-        name: 'Login'
-      })
-    },
     submit() {
       this.openLoading = true;
       if (!this.checkData()) {
         this.openLoading = false;
         return;
       }
-      console.log(this.username, this.password);
-      UserRegister(this.username, this.password).then(res => {
+      UserLogin(this.username, this.password).then(res => {
         console.log(res);
         this.openLoading = false;
         if (res.code == 200) {
           this.$toast(res.msg);
-          this.username = "";
-          this.password = "";
+          // this.username = "";
+          // this.password = "";
 
           this.$router.push({
-            path:'/login'
-          })
+            path: "/"
+          });
         } else {
           this.$toast(res.msg);
         }

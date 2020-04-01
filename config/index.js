@@ -13,7 +13,8 @@ module.exports = {
     proxyTable: {
       '/api': {
         // target: 'http://10.0.50.91:8881',
-        target: 'https://api.myjson.com/',
+        // target: 'https://api.myjson.com/',
+        target: 'http://127.0.0.1:3000/',
         changeOrigin: true,  //是否跨域
         pathRewrite: {
           '^/api': ''

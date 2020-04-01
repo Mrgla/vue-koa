@@ -54,7 +54,8 @@
       <floorComponent :floorData="floor3" :floorTitle="floorName.floor3"></floorComponent>
     </div>
 
-    <div>
+    <div style="overflow: hidden;">
+      <p class="floor-title">热卖商品</p>
       <van-list>
         <van-row gutter="20">
           <van-col span="12" v-for="(item,index) in hotGoods" :key="index">

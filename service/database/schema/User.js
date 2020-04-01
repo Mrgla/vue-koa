@@ -9,9 +9,12 @@ const userSchema = new schema({
     userId: ObjectId,
     userName: { unique: true, type: String },
     password: { unique: true, type: String },
-    createAt: { type: Date, default: Date.now() },
-    lastLoginAt: { type: Date, default: Date.now() }
+    createAt: { type: Date, default: new Date().getTime() },
+    lastLoginAt: { type: Date, default: new Date().getTime() }
+}, {
+    collection: 'users'
 })
+
 userSchema.pre('save', function (next) {
     console.log(this)
     bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
@@ -19,7 +22,7 @@ userSchema.pre('save', function (next) {
             return next(err)
         }
         bcrypt.hash(this.password, salt, (err, hash) => {
-            if (err){
+            if (err) {
                 return next(err)
             }
             this.password = hash
@@ -28,5 +31,23 @@ userSchema.pre('save', function (next) {
     })
 })
 
+userSchema.methods = {
+    /**
+     * @description: 
+     * @param {_password} 客户端密码
+     * @param {password} 数据库密码
+     * @return: 匹配密码状态
+     */
+    comparePassword: (_password, password) => {
+        return new Promise((resovle, reject) => {
+            bcrypt.compare(_password, password, (err, isMatch) => {
+                if (!err) {
+                    resovle(isMatch)
+                }
+                reject(err)
+            })
+        })
+    }
+}
 
 mongoose.model('User', userSchema)

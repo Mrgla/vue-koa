@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const glob = require('glob')
 const { resolve } = require('path')
 
-const db = "mongodb://localhost/simle-db"
+const db = "mongodb://localhost/smile_db"
 mongoose.Promise = global.Promise
 
 

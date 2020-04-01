@@ -21,10 +21,19 @@ export default {
 </script>
 
 <style scoped>
+.goods-image{
+  text-align: center;
+}
 .goods-name {
   padding: 0 8px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: 12px;
+}
+.goods-price{
+  padding: 0 8px;
+  font-size: 12px;
+  text-align: center;
 }
 </style>
