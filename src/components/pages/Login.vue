@@ -60,9 +60,7 @@ export default {
         this.openLoading = false;
         if (res.code == 200) {
           this.$toast(res.msg);
-          // this.username = "";
-          // this.password = "";
-
+          sessionStorage.setItem('userInfo', JSON.stringify(res.data.userInfo))
           this.$router.push({
             path: "/"
           });

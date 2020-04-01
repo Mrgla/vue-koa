@@ -24,8 +24,13 @@ router.post('/login', async (ctx) => {
         await newUser.comparePassword(password, res.password)
             .then(isMatch => {
                 if (isMatch) {
+                    let userInfo = JSON.parse(JSON.stringify(res))
+                    delete(userInfo.password)
                     ctx.body = {
                         code: 200,
+                        data: {
+                            userInfo: userInfo
+                        },
                         msg: '登录成功'
                     }
                 } else {

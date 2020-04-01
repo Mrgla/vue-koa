@@ -3,11 +3,22 @@ import Router from 'vue-router'
 import ShoppingMall from '@/components/pages/ShoppingMall'
 import Register from '@/components/pages/Register'
 import Login from '@/components/pages/Login'
+import Error from '@/components/Error'
 
 Vue.use(Router)
 
 const router = new Router({
+  mode: "history",
   routes: [
+    {
+      // 404页面
+      path: '*',
+      name: 'error',
+      component: Error,
+      meta: {
+        title: '页面丢失了~'
+      }
+    },
     {
       path: '/',
       name: 'ShoppingMall',

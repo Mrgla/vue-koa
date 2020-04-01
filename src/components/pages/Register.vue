@@ -43,14 +43,22 @@ export default {
       paswordMsg: ""
     };
   },
+  created() {
+    if (sessionStorage.getItem("userInfo")) {
+      this.$toast("您已经登录了");
+      this.$router.push({
+        path: "/"
+      });
+    }
+  },
   methods: {
     goBack() {
       this.$router.go(-1);
     },
-    goLogin(){
+    goLogin() {
       this.$router.push({
-        name: 'Login'
-      })
+        name: "Login"
+      });
     },
     submit() {
       this.openLoading = true;
@@ -68,8 +76,8 @@ export default {
           this.password = "";
 
           this.$router.push({
-            path:'/login'
-          })
+            path: "/login"
+          });
         } else {
           this.$toast(res.msg);
         }
