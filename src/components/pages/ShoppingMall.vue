@@ -38,7 +38,7 @@
       <div class="recommend-body">
         <swiper :options="swiperOption">
           <swiper-slide v-for=" (item ,index) in recommendGoods" :key="index">
-            <div class="recommend-item">
+            <div class="recommend-item" @click="goGoodsDetile(item)">
               <img :src="item.image" width="80%" />
               <div>{{item.goodsName}}</div>
               <div>￥{{item.price | moneyFilter}} (￥{{item.mallPrice}})</div>
@@ -81,7 +81,7 @@ export default {
     swiper,
     swiperSlide,
     floorComponent,
-    goodsInfo,
+    goodsInfo
   },
   data() {
     return {
@@ -104,22 +104,37 @@ export default {
   created() {
     // this.$toast("提示文案");
     let _this = this;
-    getIndex()
-      .then(res => {
-        // console.log(res);
-        _this.category = res.data.category;
-        _this.adBanner = res.data.advertesPicture;
-        _this.bannerPicArray = res.data.slides;
-        _this.recommendGoods = res.data.recommend;
-        _this.floor1 = res.data.floor1; //楼层1数据
-        _this.floor2 = res.data.floor2; //楼层1数据
-        _this.floor3 = res.data.floor3; //楼层1数据
-        _this.floorName = res.data.floorName; //楼层1数据
-        _this.hotGoods = res.data.hotGoods;
-      })
-      .catch(err => {
-        _this.$toast("网络错误");
+    this.getIndexData();
+  },
+  methods: {
+    getIndexData() {
+      let _this = this;
+      getIndex()
+        .then(res => {
+          // console.log(res);
+          _this.category = res.data.category;
+          _this.adBanner = res.data.advertesPicture;
+          _this.bannerPicArray = res.data.slides;
+          _this.recommendGoods = res.data.recommend;
+          _this.floor1 = res.data.floor1; //楼层1数据
+          _this.floor2 = res.data.floor2; //楼层1数据
+          _this.floor3 = res.data.floor3; //楼层1数据
+          _this.floorName = res.data.floorName; //楼层1数据
+          _this.hotGoods = res.data.hotGoods;
+        })
+        .catch(err => {
+          _this.$toast("网络错误");
+        });
+    },
+    goGoodsDetile(item) {
+      console.log(item);
+      this.$router.push({
+        path: "/goods",
+        query: {
+          goodsId: item.goodsId
+        }
       });
+    }
   },
   filters: {
     moneyFilter(money) {

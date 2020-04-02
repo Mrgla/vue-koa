@@ -9,7 +9,9 @@ const router = new Router();
 const mongoose = require('mongoose')
 const { connect, initSchemas } = require('./database/init.js')
 
-const user = require('./appApi/user.js')
+const user = require('./appApi/user')
+const goods = require('./appApi/goods')
+
 
 // 首页静态数据
 const indexData = require('./database/indexData')
@@ -25,6 +27,7 @@ const indexData = require('./database/indexData')
 })()
 
 router.use('/user', user.routes())
+router.use('/goods', goods.routes())
 
 app.use(bodyParser());
 app.use(router.routes())
@@ -70,6 +73,6 @@ const getFileData = async function (filePath) {
   })
 }
 
-app.listen(3001, () => {
+app.listen(3000, () => {
   console.log('[Server] starting at port 3000')
 })

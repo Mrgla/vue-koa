@@ -6,7 +6,6 @@ let baseURL = process.env.NODE_ENV == 'development' ? '/api' : ''
 
 export function ajax(url, data = {}, type = 'get') {
     let _this = this
-
     url = baseURL + url
     return new Promise((resolve, reject) => {
         // console.log('url', url)
