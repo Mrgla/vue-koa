@@ -114,6 +114,7 @@ router.get('/getDetailGoodsInfo', async (ctx) => {
 
 })
 
+// 获取大类
 router.get('/getCategoryList', async (ctx) => {
     try {
         const Category = mongoose.model('Category')
@@ -124,7 +125,7 @@ router.get('/getCategoryList', async (ctx) => {
             data: res
         }
     } catch (error) {
-        console.log(err)
+        console.log(error)
         ctx.body = {
             code: 500,
             msg: '查询失败',
@@ -132,18 +133,10 @@ router.get('/getCategoryList', async (ctx) => {
         }
     }
 })
-
+// 获取小类
 router.get('/getCategorySubList', async (ctx) => {
     let categoryId = ctx.query.categoryId
     console.log('categoryId', categoryId)
-    // if (!categoryId) {
-    //     ctx.body = {
-    //         code: 200,
-    //         msg: '查询成功',
-    //         data:{}
-    //     }
-    //     return
-    // }
     try {
         const CategorySub = mongoose.model('CategorySub')
         let res = await CategorySub.find({ MALL_CATEGORY_ID: categoryId }).exec()
@@ -153,6 +146,7 @@ router.get('/getCategorySubList', async (ctx) => {
             data: res
         }
     } catch (error) {
+        console.log(error)
         ctx.body = {
             code: 500,
             msg: '查询失败'
@@ -162,12 +156,19 @@ router.get('/getCategorySubList', async (ctx) => {
 
 router.get('/getGoodsListByCategorySubID', async (ctx) => {
     try {
-        let categorySubId = ctx.query.categorySubId
+        let SUB_ID = ctx.query.categorySubId
         // let categorySubId = '2c9f6c946016ea9b016016f79c8e0000'
+
+        let page = ctx.query.page || 1
+        let pageSize = ctx.query.pageSize || 10 //每页显示数量
+        let startIndex = (page - 1) * pageSize
+
         const Goods = mongoose.model('Goods')
-        let result = await Goods.find({ SUB_ID: categorySubId }).exec()
+        let result = await Goods.find({ SUB_ID: SUB_ID })
+            .skip(startIndex).limit(pageSize).exec() 
         ctx.body = { code: 200, data: result, msg: '查询成功' }
     } catch (err) {
+        console.log(err)
         ctx.body = { code: 500, msg: '查询失败' }
     }
 

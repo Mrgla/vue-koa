@@ -8,7 +8,7 @@ const SALT_WORK_FACTOR = 10
 const userSchema = new schema({
     userId: ObjectId,
     userName: { unique: true, type: String },
-    password: { unique: true, type: String },
+    password: {type: String },
     createAt: { type: Date, default: new Date().getTime() },
     lastLoginAt: { type: Date, default: new Date().getTime() }
 }, {

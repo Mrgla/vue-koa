@@ -23,7 +23,7 @@
     </div>
 
     <div class="type_bar">
-      <div v-for="(cate, index) in category" :key="index">
+      <div v-for="(cate, index) in category" :key="index" @click="goCategoryList(cate)">
         <img v-lazy="cate.image" alt width="100%" />
         <span>{{cate.mallCategoryName}}</span>
       </div>
@@ -134,6 +134,14 @@ export default {
           goodsId: item.goodsId
         }
       });
+    },
+    goCategoryList(item){
+      this.$router.push({
+        path:'/CategoryList',
+        query: {
+         categoryId: item.mallCategoryId
+        }
+      })
     }
   },
   filters: {

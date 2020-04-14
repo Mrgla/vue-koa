@@ -45,6 +45,14 @@ export default {
       paswordMsg: ""
     };
   },
+  created() {
+    if (sessionStorage.getItem("userInfo")) {
+      this.$toast("您已经登录了");
+      this.$router.push({
+        path: "/"
+      });
+    }
+  },
   methods: {
     goBack() {
       this.$router.go(-1);
@@ -60,7 +68,7 @@ export default {
         this.openLoading = false;
         if (res.code == 200) {
           this.$toast(res.msg);
-          sessionStorage.setItem('userInfo', JSON.stringify(res.data.userInfo))
+          sessionStorage.setItem("userInfo", JSON.stringify(res.data.userInfo));
           this.$router.push({
             path: "/"
           });

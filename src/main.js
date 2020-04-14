@@ -4,8 +4,28 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-import { Icon, Button, Col, Row, Search, Swipe, SwipeItem, Lazyload, Toast, List, Field, NavBar, Tab, Tabs, Tabbar, TabbarItem } from "vant";
+import {
+  Icon,
+  Button,
+  Col,
+  Row,
+  Search,
+  Swipe,
+  SwipeItem,
+  Lazyload,
+  Toast,
+  List,
+  Field,
+  NavBar,
+  Tab,
+  Tabs,
+  Tabbar,
+  TabbarItem,
+  PullRefresh,
+  Empty 
+} from "vant";
 Vue.use(Icon)
+Vue.use(PullRefresh)
 Vue.use(Button)
 Vue.use(Col)
 Vue.use(Row)
@@ -21,6 +41,7 @@ Vue.use(Tab)
 Vue.use(Tabs)
 Vue.use(Tabbar)
 Vue.use(TabbarItem)
+Vue.use(Empty)
 
 Vue.config.productionTip = false
 

@@ -44,12 +44,7 @@ export default {
     };
   },
   created() {
-    if (sessionStorage.getItem("userInfo")) {
-      this.$toast("您已经登录了");
-      this.$router.push({
-        path: "/"
-      });
-    }
+
   },
   methods: {
     goBack() {
