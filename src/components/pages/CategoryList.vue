@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="navbar-div">
-      <van-nav-bar left-arrow title="类别列表" @click-left="onClickLeft" />
+      <!-- left-arrow @click-left="onClickLeft" -->
+      <van-nav-bar fixed placeholder z-index="10"   title="类别列表"  />
     </div>
 
     <div>
@@ -31,12 +32,17 @@
 
           <div id="list-div">
             <van-pull-refresh v-model="isRefresh" @refresh="onRefresh">
-              <van-empty description="暂无数据" v-if="goodsList.length == 0 &&  loading == false" />
+              <van-empty description="空空如也" v-if="goodsList.length == 0 &&  loading == false" />
 
               <van-list v-model="loading" :finished="finished" @load="onLoad" v-else>
-                <div class="list-item" v-for="(item,index) in goodsList" :key="index+'1'" @click="goGoodsDetile(item)">
+                <div
+                  class="list-item"
+                  v-for="(item,index) in goodsList"
+                  :key="index+'1'"
+                  @click="goGoodsDetile(item)"
+                >
                   <div class="list-item-img">
-                    <img :src="item.IMAGE1" width="100%" :onerror="errorImg"/>
+                    <img :src="item.IMAGE1" width="100%" :onerror="errorImg" />
                   </div>
                   <div class="list-item-text">
                     <div>{{item.NAME}}</div>
@@ -76,7 +82,7 @@ export default {
       goodsList: [],
       page: 1,
       pageSize: 10,
-      errorImg:'this.src="' + require('@/assets/img/errorimg.png') + '"' 
+      errorImg: 'this.src="' + require("@/assets/img/errorimg.png") + '"'
     };
   },
   mounted() {
@@ -91,9 +97,9 @@ export default {
     await this.categoryList();
     await this.categorySubList(params.categoryId || 1);
 
-    this.category.forEach((ele,index) => {
-      if(ele.ID == params.categoryId ){
-          this.categoryIndex = index
+    this.category.forEach((ele, index) => {
+      if (ele.ID == params.categoryId) {
+        this.categoryIndex = index;
       }
     });
   },
@@ -140,7 +146,7 @@ export default {
         this.subCategory = res.data;
         this.active = 0;
         this.categorySubId = this.subCategory[0].ID;
-    
+
         this.onRefresh();
       } else {
         this.$toast(res.msg);
@@ -174,9 +180,9 @@ export default {
       }, 0);
     }
   },
-  filters:{
-    toMoneyFilter: function (params) {
-      return toMoney(params)
+  filters: {
+    toMoneyFilter: function(params) {
+      return toMoney(params);
     }
   }
 };
@@ -227,5 +233,6 @@ export default {
   font-size: 10px;
   color: #ccc;
   padding: 10px 0;
+  padding-bottom: 60px;
 }
 </style>

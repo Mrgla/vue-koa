@@ -17,14 +17,14 @@
     <div class="swiper_area">
       <van-swipe :autoplay="5000" class="swiper_wrap">
         <van-swipe-item v-for="(img, index) in bannerPicArray" :key="index">
-          <img v-lazy="img.image"  />
+          <img v-lazy="img.image" />
         </van-swipe-item>
       </van-swipe>
     </div>
 
     <div class="type_bar">
       <div v-for="(cate, index) in category" :key="index" @click="goCategoryList(cate)">
-        <img v-lazy="cate.image" alt width="100%"  />
+        <img v-lazy="cate.image" alt width="100%" />
         <span>{{cate.mallCategoryName}}</span>
       </div>
     </div>
@@ -54,7 +54,7 @@
       <floorComponent :floorData="floor3" :floorTitle="floorName.floor3"></floorComponent>
     </div>
 
-    <div style="overflow: hidden;">
+    <div style="overflow: hidden; ">
       <p class="floor-title">热卖商品</p>
       <van-list>
         <van-row gutter="20">
@@ -137,8 +137,8 @@ export default {
     },
     goCategoryList(item) {
       this.$router.push({
-        path: "/CategoryList",
-        query: {
+        name: "CategoryList",
+        params: {
           categoryId: item.mallCategoryId
         }
       });
@@ -156,11 +156,20 @@ export default {
 ::placeholder {
   font-size: 0.8rem;
 }
+.ShoppingMall {
+  padding-bottom: 60px;
+  padding-top: 2.2rem;
+}
 .search-bar {
   height: 2.2rem;
+  width: 100%;
   background: rgb(121, 187, 255);
   line-height: 2.2rem;
   text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
 }
 .search-input {
   width: 100%;

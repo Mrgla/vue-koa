@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="navbar-div">
-      <van-nav-bar title="商品详情" left-arrow @click-left="onClickLeft" />
+      <van-nav-bar title="商品详情" left-arrow @click-left="onClickLeft"  />
     </div>
 
     <div class="topimage-div">

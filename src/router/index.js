@@ -8,6 +8,7 @@ import Register from '@/components/pages/Register'
 import Login from '@/components/pages/Login'
 import Goods from '@/components/pages/Goods'
 import CategoryList from '@/components/pages/CategoryList'
+import shopCar from '@/components/pages/ShopCar'
 
 Vue.use(Router)
 
@@ -49,6 +50,12 @@ const router = new Router({
       path: '/categoryList', name: 'CategoryList', component: CategoryList,
       meta: {
         title: '分类'
+      }
+    },
+    {
+      path: '/shopCar', name: 'shopCar', component: shopCar,
+      meta: {
+        title: '购物车'
       }
     },
   ]
