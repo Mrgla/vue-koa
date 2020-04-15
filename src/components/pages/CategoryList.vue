@@ -34,13 +34,13 @@
               <van-empty description="暂无数据" v-if="goodsList.length == 0 &&  loading == false" />
 
               <van-list v-model="loading" :finished="finished" @load="onLoad" v-else>
-                <div class="list-item" v-for="(item,index) in goodsList" :key="index+'1'">
+                <div class="list-item" v-for="(item,index) in goodsList" :key="index+'1'" @click="goGoodsDetile(item)">
                   <div class="list-item-img">
-                    <img :src="item.IMAGE1" width="100%" />
+                    <img :src="item.IMAGE1" width="100%" :onerror="errorImg"/>
                   </div>
                   <div class="list-item-text">
                     <div>{{item.NAME}}</div>
-                    <div class>￥{{item.ORI_PRICE}}</div>
+                    <div class>￥{{item.ORI_PRICE | toMoneyFilter}}</div>
                   </div>
                 </div>
                 <div v-show="finished" class="finished_tips">没有更多了~</div>
@@ -59,6 +59,9 @@ import {
   getCategorySubList,
   getGoodsBySubId
 } from "@/api/index";
+
+import { toMoney } from "@/filter/index";
+
 export default {
   data() {
     return {
@@ -72,7 +75,8 @@ export default {
       isRefresh: false,
       goodsList: [],
       page: 1,
-      pageSize: 10
+      pageSize: 10,
+      errorImg:'this.src="' + require('@/assets/img/errorimg.png') + '"' 
     };
   },
   mounted() {
@@ -81,20 +85,26 @@ export default {
     document.getElementById("list-div").style.height =
       winHeight - 44 - 46 + "px";
   },
-  // watch: {
-  //   active: function(newVal, oldVal) {
-  //     console.log(newVal, oldVal)
-  //   }
-  // },
   async created() {
-    let params = this.$route.query;
+    let params = this.$route.params;
 
     await this.categoryList();
     await this.categorySubList(params.categoryId || 1);
+
+    this.category.forEach((ele,index) => {
+      if(ele.ID == params.categoryId ){
+          this.categoryIndex = index
+      }
+    });
   },
   methods: {
-    change() {
-      this.msg = 1;
+    goGoodsDetile(item) {
+      this.$router.push({
+        path: "/goods",
+        query: {
+          goodsId: item.ID
+        }
+      });
     },
     onClickLeft() {
       this.$router.go(-1);
@@ -162,6 +172,11 @@ export default {
       setTimeout(() => {
         this.getGoods();
       }, 0);
+    }
+  },
+  filters:{
+    toMoneyFilter: function (params) {
+      return toMoney(params)
     }
   }
 };

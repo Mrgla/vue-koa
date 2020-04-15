@@ -17,14 +17,14 @@
     <div class="swiper_area">
       <van-swipe :autoplay="5000" class="swiper_wrap">
         <van-swipe-item v-for="(img, index) in bannerPicArray" :key="index">
-          <img v-lazy="img.image" />
+          <img v-lazy="img.image"  />
         </van-swipe-item>
       </van-swipe>
     </div>
 
     <div class="type_bar">
       <div v-for="(cate, index) in category" :key="index" @click="goCategoryList(cate)">
-        <img v-lazy="cate.image" alt width="100%" />
+        <img v-lazy="cate.image" alt width="100%"  />
         <span>{{cate.mallCategoryName}}</span>
       </div>
     </div>
@@ -135,13 +135,13 @@ export default {
         }
       });
     },
-    goCategoryList(item){
+    goCategoryList(item) {
       this.$router.push({
-        path:'/CategoryList',
+        path: "/CategoryList",
         query: {
-         categoryId: item.mallCategoryId
+          categoryId: item.mallCategoryId
         }
-      })
+      });
     }
   },
   filters: {
@@ -197,6 +197,7 @@ export default {
   padding: 0.3rem;
   font-size: 12px;
   text-align: center;
+  flex: 1;
 }
 
 .recommend-area {

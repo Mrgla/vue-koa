@@ -36,7 +36,7 @@ app.use(router.allowedMethods())
 app.use(async (ctx) => {
   if (ctx.url === '/index/data' && ctx.method === 'GET') {
     // ctx.body = indexData
-    let filePath = path.join(__dirname, 'indexData.json')
+    let filePath = path.join(__dirname, '/json/indexData.json')
     console.log(filePath)
     let res = await getFileData(filePath)
     ctx.body = res
